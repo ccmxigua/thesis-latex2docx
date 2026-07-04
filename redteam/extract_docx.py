@@ -116,12 +116,8 @@ def extract_styles(style_xml):
         ppr = st.find(_tag("w:pPr"))
         rpr = st.find(_tag("w:rPr"))
 
-        # Duplicate style handling: keep the richer definition (prefer rpr)
-        existing = styles.get(sid)
-        if existing:
-            if rpr is None:
-                continue  # existing is richer or equal, skip this empty one
-            # Both have rpr — keep first (reference.docx definition)
+        # Duplicate style handling: keep first definition (reference.docx comes first)
+        if styles.get(sid):
             continue
 
         styles[sid] = {

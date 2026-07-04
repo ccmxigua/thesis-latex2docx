@@ -1583,26 +1583,46 @@
     "justify": null
   },
   "TitlePageMeta": {
-    "name": "TitlePageMeta",
+    "name": "Title Page Meta",
     "type": "paragraph",
-    "basedOn": "BodyText",
-    "fonts": {},
-    "size_halfpt": null,
-    "bold": false,
+    "basedOn": "Normal",
+    "fonts": {
+      "ascii": "Times New Roman",
+      "hAnsi": "Times New Roman",
+      "eastAsia": "SimSun",
+      "cs": "Times New Roman"
+    },
+    "size_halfpt": 28,
+    "bold": true,
     "italic": false,
-    "spacing": {},
+    "spacing": {
+      "before": 0,
+      "after": 0,
+      "line": 240,
+      "lineRule": "auto"
+    },
     "indent": {},
     "justify": null
   },
   "TitlePageDegree": {
-    "name": "TitlePageDegree",
+    "name": "Title Page Degree",
     "type": "paragraph",
-    "basedOn": "BodyText",
-    "fonts": {},
-    "size_halfpt": null,
-    "bold": false,
+    "basedOn": "Normal",
+    "fonts": {
+      "ascii": "Times New Roman",
+      "hAnsi": "Times New Roman",
+      "eastAsia": "SimSun",
+      "cs": "Times New Roman"
+    },
+    "size_halfpt": 28,
+    "bold": true,
     "italic": false,
-    "spacing": {},
+    "spacing": {
+      "before": 0,
+      "after": 0,
+      "line": 240,
+      "lineRule": "auto"
+    },
     "indent": {},
     "justify": null
   },
