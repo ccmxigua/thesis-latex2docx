@@ -537,6 +537,56 @@ def inject_generic_label_markers(text: str) -> str:
     return GENERIC_LABEL_RE.sub(lambda m: f'\n{LABEL_MARKER_FMT.format(label=m.group(1))}\n', text)
 
 
+def replace_ctexbook_commands(text: str) -> str:
+    """Convert ctexbook-specific commands to standard LaTeX that pandoc understands."""
+    # Abstract: \begin{abstract} → \chapter*{摘要}
+    #           \begin{abstract}[english] → \chapter*{Abstract}
+    #           \end{abstract} → remove
+    text = re.sub(r'\\begin\{abstract\}\[(?:english|en)\]', r'\\chapter*{Abstract}', text)
+    text = re.sub(r'\\begin\{abstract\}', r'\\chapter*{摘要}', text)
+    text = re.sub(r'\\end\{abstract\}', '', text)
+
+    # Keywords: \keywords{...} → \textbf{关键词：}...
+    #           \keywords[english|en]{...} → \textbf{Keywords:}...
+    result = []
+    i = 0
+    while i < len(text):
+        m_en = re.match(r'\\keywords\[(?:english|en)\]\{', text[i:])
+        m_cn = re.match(r'\\keywords\{', text[i:])
+        if m_en:
+            prefix = '\n\\textbf{Keywords:} '
+            open_pos = i + m_en.group().find('{')
+            body, end = extract_balanced(text, open_pos, '{', '}')
+            result.append(prefix + body[1:-1])
+            i = end
+        elif m_cn:
+            prefix = '\n\\textbf{关键词：} '
+            open_pos = i + m_cn.group().find('{')
+            body, end = extract_balanced(text, open_pos, '{', '}')
+            result.append(prefix + body[1:-1])
+            i = end
+        else:
+            result.append(text[i])
+            i += 1
+    text = ''.join(result)
+
+    # Acknowledgments: \acknowledgments{...} → \chapter*{后记}...
+    result = []
+    i = 0
+    while i < len(text):
+        if text[i:].startswith('\\acknowledgments{'):
+            open_pos = i + len('\\acknowledgments')
+            body, end = extract_balanced(text, open_pos, '{', '}')
+            inner = body[1:-1]
+            result.append('\n\\chapter*{后记}\n')
+            result.append(inner)
+            i = end
+        else:
+            result.append(text[i])
+            i += 1
+    return ''.join(result)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description='Preprocess TJUFE LaTeX before pandoc DOCX conversion.')
     parser.add_argument('input')
@@ -551,6 +601,7 @@ def main() -> None:
     text = input_path.read_text(errors='ignore')
     text = unwrap_subfloat(text)
     text = normalize_math_macros(text)
+    text = replace_ctexbook_commands(text)
     text = inject_equation_label_markers(text)
     text = inject_generic_label_markers(text)
 
