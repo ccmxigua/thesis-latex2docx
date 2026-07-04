@@ -958,7 +958,7 @@ def normalize_body(body: ET.Element) -> None:
             figure_no = 0
             table_labels = {}
             figure_labels = {}
-        elif current_chapter_label and paragraph_has_math(p):
+        elif current_chapter_label and paragraph_has_math_para(p):
             equation_no += 1
             if current_chapter_label.isdigit():
                 eq_label = f'（{current_chapter_label}.{equation_no}）'
