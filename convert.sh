@@ -36,7 +36,7 @@ EXTRA_ARGS=("$@")
 
 # Generate metadata from overlay + schema
 if [ -n "$OVERLAY" ] && [ -f "$OVERLAY" ]; then
-  TMP_META="$(mktemp /tmp/v2-metadata.XXXXXX.yaml)"
+  TMP_META="$(mktemp /tmp/v2-metadata-XXXXXXXXXX)"
   /opt/homebrew/bin/python3 "$MAPPER" "$OVERLAY" "$TMP_META"
   METADATA="$TMP_META"
   trap "rm -f '$TMP_META'" EXIT
