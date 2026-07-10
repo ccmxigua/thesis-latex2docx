@@ -8,6 +8,18 @@
 
 ---
 
+<div align="center">
+
+## 🤖⚠️ 本项目由 AI 生成 ⚠️🤖
+
+**本项目（包括全部代码、配置文件、文档及 README）由 [OpenClaw](https://github.com/openclaw/openclaw) + DeepSeek 大模型辅助生成。**
+
+所有内容均已经过人工审核和测试验证，但如有疑问请以实际运行结果为准。
+
+</div>
+
+---
+
 ## 目录
 
 - [项目简介](#项目简介)
